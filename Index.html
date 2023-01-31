@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz</title>
+    <link rel="stylesheet" href="user.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="heading">
+        <div class="action"></div>
+        <div class="welcome">
+          <h1><strong>WELCOME</strong></h1>
+          <h2>Test your Knowledge here</h2>
+        </div>
+        <div class="title">QUIZ TIME</div>
+      </div>
+    </div>
+    <div class="main-div">
+      <div class="inner-div">
+        <h2 class="question" id="question_s">Click Start to start the Quiz</h2>
+        <div style="display: none" id="box">
+          <h2 class="question" id="question_no">1</h2>
+          <ul>
+            <li>
+              <input type="radio" name="answer" id="ans1" class="answer" />
+              <label for="ans1" id="OptionA_s"></label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="ans2" class="answer" />
+              <label for="ans1" id="OptionB_s"></label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="ans3" class="answer" />
+              <label for="ans1" id="OptionC_s"></label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="ans4" class="answer" />
+              <label for="ans1" id="OptionD_s"></label>
+            </li>
+          </ul>
+          
+        </div>
+        <div class="buttonkpapa">
+            <div><button id="NEXT" class="submitbtn" style="display: none; padding: 4px;">NEXT</button></div>
+            <div> <button id="again" style="display: none; padding: 4px;" onclick="location.reload()">TRY AGAIN</button></div>
+        </div>
+        <button id="submit" class="submitbtn">START</button>
+        
+      </div>
+      <div id="showscore" class="scorearea"></div>
+      <div id="answerNone" style="display: none;"></div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAj2cqV0HeaU6ffr7ccjCD1BRM2kKUOS04",
+        authDomain: "quizapp-b6d94.firebaseapp.com",
+        databaseURL: "https://quizapp-b6d94-default-rtdb.firebaseio.com",
+        projectId: "quizapp-b6d94",
+        storageBucket: "quizapp-b6d94.appspot.com",
+        messagingSenderId: "525148929664",
+        appId: "1:525148929664:web:ff1b2516e0925fed6cf065",
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      import { getFirestore, doc, setDoc, addDoc, updateDoc, deleteDoc, getDoc, collection} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+      let question_s = document.getElementById("question_s");
+      let question_no_s = document.getElementById("question_no_s");
+      let OptionA_s = document.getElementById("OptionA_s");
+      let OptionB_s = document.getElementById("OptionB_s");
+      let OptionC_s = document.getElementById("OptionC_s");
+      let OptionD_s = document.getElementById("OptionD_s");
+      let answerNone = document.getElementById("answerNone");
+      let box = document.getElementById("box");
+      let NEXT = document.getElementById("NEXT");
+      let again = document.getElementById("again");
+      let Selbtn = document.getElementById("submit");
+
+
+      const db = getFirestore();
+      const answers = document.querySelectorAll(".answer");
+      let score = 0;
+      const showScore = document.querySelector("#showscore");
+
+      const increment = () => {
+        let i = parseInt(document.getElementById("question_no").innerHTML);
+
+        i = i + 1;
+        document.getElementById("question_no").innerHTML = i;
+      };
+
+      async function GetADocument() {
+        document.getElementById("submit").innerHTML = "NEXT";
+        var ref = doc(
+          db,
+          "thequestionlist",
+          document.getElementById("question_no").innerHTML
+        );
+        const docSnap = await getDoc(ref);
+
+        if (docSnap.exists()) {
+          document.getElementById("question_s").innerHTML =
+            docSnap.data().Question;
+          document.getElementById("OptionA_s").innerHTML =
+            docSnap.data().OptionA;
+          document.getElementById("OptionB_s").innerHTML =
+            docSnap.data().OptionB;
+          document.getElementById("OptionC_s").innerHTML =
+            docSnap.data().OptionC;
+          document.getElementById("OptionD_s").innerHTML =
+            docSnap.data().OptionD;
+          document.getElementById("answerNone").innerHTML =
+            docSnap.data().Answer;
+        } else {
+          alert("no such document");
+        }
+      }
+      function answerButton() {
+        let checkanswer = answerNone.innerHTML;
+        console.log(checkanswer);
+
+        let answer;
+        answers.forEach((curAnsEle) => {
+          if (curAnsEle.checked) {
+            answer = curAnsEle.id;
+          }
+        });
+        if (checkanswer == answer) {
+          console.log("success");
+          score++;
+        } else {
+          console.log("fail");
+        }
+        increment();
+        answers.forEach((curAnsElem) => (curAnsElem.checked = false));
+        showScore.innerHTML = `<h3>Your Correct Answers are: ${score}</h3>`;
+      }
+
+    //   showScore.classList.remove("scorearea");
+
+      Selbtn.addEventListener("click", () => {
+        GetADocument();
+        box.style.display = "block";
+        Selbtn.style.display = "none";
+        NEXT.style.display = "block";
+        again.style.display = "block";
+      });
+
+      NEXT.addEventListener("click", () => {
+        showScore.classList.remove("scorearea");
+        answerButton();
+        GetADocument();
+      });
+
+      // Before load 2nd question, call deselectAll()
+    </script>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=PT+Serif:ital@1&family=Source+Sans+Pro:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=PT+Serif:ital@1&family=Pacifico&family=Source+Sans+Pro:wght@600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=EB+Garamond:wght@700&family=PT+Serif:ital@1&family=Pacifico&family=Source+Sans+Pro:wght@600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #36454F;
+}
+.heading {
+  display: flex;
+  margin: 1em 0 0 1em;
+}
+@keyframes example {
+  0% {
+    background-color: red;
+    left: 0px;
+    top: 0px;
+  }
+  50% {
+    background-color: yellow;
+    left: 0px;
+    top: 100px;
+  }
+  100% {
+    background-color: green;
+    left: 0px;
+    top: 0px;
+  }
+}
+.action {
+    height: 7vh;
+    width: 3vw;
+    border-radius: 50%;
+    position: relative;
+    background-color: blueviolet;
+    margin: 0em 0 0 1em;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+.welcome {
+  font-family: "EB Garamond", serif;
+  font-family: "PT Serif", serif;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: x-large;
+  color: bisque;
+  margin: 0 0 0 1em;
+}
+.title {
+  font-family: "EB Garamond", serif;
+  font-family: "Pacifico", cursive;
+  font-family: "PT Serif", serif;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0em 0 0 2em;
+  font-size: 4rem;
+  text-shadow: 2px 2px 8px #FF0000;
+}
+.main-div{
+    width: 100vw;
+    height: 50vh;
+    display: grid;
+    place-items: center;
+    font-family: 'Dancing Script', cursive;
+    font-family: 'EB Garamond', serif;
+    font-family: 'Pacifico', cursive;
+    font-family: 'PT Serif', serif;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.inner-div{
+    width:25vw;
+    background-color: white;
+    padding: 3em 8em;
+    border-radius: 1em;
+    box-shadow: 0 1em 1em -0.6em rgb(17, 16, 16);
+    font-size: x-large;
+    margin-top: 1em;
+}
+.inner-div h2{
+    font-size: 2rem;
+    margin: -1em 0 1em 0;
+}
+.inner-div li{
+    font-size: 1.5rem;
+    margin-top: .4em;
+    list-style: none;
+}
+input{
+    cursor: pointer;
+}
+.submitbtn
+{
+    padding: 1em, 3em;
+    outline: none;
+    font-size: 2rem;
+    font-size: 400;
+    display: block;
+    margin: auto;
+    margin-top: 1em;
+}
+.btn{
+    padding: 1em, 3em;
+    outline: none;
+    font-size: 2rem;
+    font-size: 400;
+    display: block;
+    margin: auto;
+    margin-top: 2em;
+}
+#submit:hover{
+    background-color: grey;
+}
+#showscore{
+    background-color: #dfe6e9;
+    /* box-shadow: 0 1em 1em -0.6em rgb(0, 0, 0, 0.4); */
+    padding: 10px;
+    margin-top: 3em;
+    height: 4rem;
+    /* display: none; */
+}
+.scorearea{
+    display: none;
+}
+#question_no{
+  display:none;
+}
+#showscore h3{
+  font-size: 2rem;
+}
+#showscore .btn{
+  margin-top: 3rem;
+  margin-right: 8rem;
+}
+#showscore .btn:hover{
+  background-color: #36454F;
+}
+.buttonkpapa{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#again{
+  font-size: 1.7rem;
+  margin-top: 1.8rem;
+  margin-top: 32px;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <body class="bg-light">
+        <div class="container">
+          <main>
+            <div class="py-5 text-center">
+              <h2>Admin Page</h2>
+              <p class="lead">Admin can Add and Delete the Questions onto the database from here.</p>
+            </div>
+        
+            <div class="row g-5">
+              <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Welcome Admin</h4>
+                <form class="needs-validation" novalidate="">
+
+                    <div class="col-12">
+                        <label for="firstName" class="form-label">Enter Question Number</label>
+                        <input type="text" class="form-control" id="question_no" placeholder="" value="" required="">
+                        
+                      </div>
+                  
+
+                    <div class="col-12">
+                      <label for="firstName" class="form-label">Enter Question</label>
+                      <input type="text" class="form-control" id="question" placeholder="" value="" required="">
+                      
+                    </div>
+        
+                    <div class="col-12">
+                      <label for="lastName" class="form-label">Option 1</label>
+                      <input type="text" class="form-control" id="OptionA" placeholder="" value="" required="">
+                      
+                    </div>
+        
+                    <div class="col-12">
+                      <label for="username" class="form-label">Option 2</label>
+                        <input type="text" class="form-control" id="OptionB" placeholder="" required="">
+                      
+                      </div>
+                    
+        
+                    <div class="col-12">
+                      <label for="email" class="form-label">Option 3</label>
+                      <input type="email" class="form-control" id="OptionC" placeholder="">
+                    
+                    </div>
+        
+                    <div class="col-12">
+                      <label for="address" class="form-label">Option 4</label>
+                      <input type="text" class="form-control" id="OptionD" placeholder="" required="">
+                      
+                    </div>
+        
+                    <div class="col-12">
+                      <label for="address2" class="form-label">Answer</label>
+                      <input type="text" class="form-control" id="answer" placeholder="ans1 or ans2 or ans3 or ans4">
+                    </div>
+        
+                  <hr class="my-4">
+        
+                  <button class="addbtn"  id="Add">Add Question</button>
+                  <button  class="delbtn" id="Delete">Delete Question</button><br>
+                  <span><u>To delete any question just enter the question number and press delete button.</u></span><br><br>
+                </form>
+              
+          </main>
+        </div>
+        
+              
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+    
+    
+            const firebaseConfig = {
+        apiKey: "AIzaSyAj2cqV0HeaU6ffr7ccjCD1BRM2kKUOS04",
+        authDomain: "quizapp-b6d94.firebaseapp.com",
+        databaseURL: "https://quizapp-b6d94-default-rtdb.firebaseio.com",
+        projectId: "quizapp-b6d94",
+        storageBucket: "quizapp-b6d94.appspot.com",
+        messagingSenderId: "525148929664",
+        appId: "1:525148929664:web:ff1b2516e0925fed6cf065"
+        };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            import { getFirestore, doc, setDoc, addDoc, updateDoc, deleteDoc, getDoc, collection } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+            
+    
+            const db = getFirestore();
+        let question = document.getElementById("question");
+        let question_no = document.getElementById("question_no");
+        let OptionA = document.getElementById("OptionA");
+        let OptionB = document.getElementById("OptionB");
+        let OptionC = document.getElementById("OptionC");
+        let OptionD = document.getElementById("OptionD");
+    
+        let addbtn = document.getElementById("Add");
+            var delBtn=document.getElementById("Delete");
+    
+    
+            async function AddDocument_CustomID() {
+                console.log("hello");
+            var ref = doc(db, "thequestionlist", document.getElementById("question_no").value);
+            await setDoc(
+                ref, {
+            Question: document.getElementById("question").value,
+            OptionA: document.getElementById("OptionA").value,
+            OptionB: document.getElementById("OptionB").value,
+            OptionC: document.getElementById("OptionC").value,
+            OptionD: document.getElementById("OptionD").value,
+            Answer:document.getElementById("answer").value
+            }
+            )
+                .then(() => {
+                    alert("data added successfully");
+                }
+                )
+                .catch((error) => {
+                    alert("unsuccessfull,error:" + error);
+                });
+    
+        }
+    
+        async function deleteADoc(ref){
+            var ref = doc(db, "thequestionlist", document.getElementById("question_no").value);
+            const docSnap=await getDoc(ref);
+            if(!docSnap.exists()){
+                alert("document not available");
+                return;
+            }
+            await deleteDoc(ref)
+            .then(()=>{
+                alert("data deleted successfully");
+            }).catch((error)=>{
+                alert("unsuccessful op", error);
+            });
+        }
+        
+        addbtn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            AddDocument_CustomID();
+            
+        });
+        delBtn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            deleteADoc();
+            
+        });
+          </script>
+</body>
+</html>
